@@ -7,15 +7,8 @@ public class Game {
 
     private Player player1;
     private Player player2;
-    private int count;
     private Player currentPlayer = null;
-    private Player loser = null;
     private Scanner scanner = new Scanner(System.in);
-
-    public int subCount(int count) {
-        this.count -= count;
-        return this.count;
-    }
 
     public Game(Player player1, Player player2) {
         this.player1 = player1;
@@ -34,76 +27,34 @@ public class Game {
     public int startTotal() {
         int total = 0;
 
-        System.out.println("Please choose the number of sticks to begin with (10-100)");
-
-        while(!(total >= 10 && total <= 100)) {
+        while (total < 10 || total > 100) {
             System.out.println("Please pick a number from 10 to 100");
-
-        }
-            if (total >= 10 && total <= 100){
             total = scanner.nextInt();
         }
-        int startTotal = total;
-        return startTotal;
+        return total;
     }
-    public int newTotal() {
+
+    public void runGame(){
         int total = startTotal();
-        boolean turnOver = false;
+        currentPlayer = player1;
 
-        System.out.format("It is %s's turn to choose\n", currentPlayer.getName());
-        do {
+        System.out.printf("There are %d sticks on the starting board.\n", total);
+
+        while(total >= 2) {
             int choice = currentPlayer.chooseSticks();
-            System.out.printf("You chose %d sticks.\n", choice);
-            newTotal() = total - choice;
-            return newTotal();
+            total -= choice;
 
-            if (turn) {
-                }
+            System.out.printf("%s takes %d sticks, there are %d sticks remaining.\n", currentPlayer.getName(), choice, total);
+            changePlayer();
+        }
+        if (total < 1) {
+            System.out.printf("You took the last stick, so %s is the winner.\n", currentPlayer.getName());
+        }
+        if (total == 1){
+            System.out.printf("%s has to take the last stick.\n", currentPlayer.getName());
+            changePlayer();
+            System.out.printf("%s is the winner!\n", currentPlayer.getName());
         }
     }
 
-
-    public Player runGame() {
-        int newTotal = 0;
-        currentPlayer = player1;
-
-        System.out.printf("There are %d sticks on the starting board.\n", startTotal());
-
-        while (loser == null) ;
-//        System.out.printf("%s takes %d sticks, there are %d sticks remaining.\n", currentPlayer, )
-
-        if (currentPlayer.newTotal <= 1) {
-            newTotal = startTotal() - Player.choice;
-            return currentPlayer;
-            System.out.printf("%s takes %d sticks, there are %d sticks remaining.\n", currentPlayer, currentPlayer.chooseSticks(),newTotal);
-    }
-
-    else
-
-    {
-        changePlayer();
-    }
-
-    loser = currentPlayer;
-    return loser;
-
-    }
 }
-
-//
-//        while(winner == null){
-//            Turn turn = new Turn(currentPlayer);
-//            currentPlayer.addScore(turn.runTurn());
-//            System.out.format("%s's score is now %d\n", currentPlayer.getName(), currentPlayer.getScore());
-//
-//            if(currentPlayer.getScore() >= WINSCORE){
-//                winner = currentPlayer;
-//            }
-//            else{
-//                switchPlayer();
-//            }
-//        }
-//
-//        System.out.format("Winner is %s with %d points\n", winner.getName(), winner.getScore());
-//
-//        return winner;

@@ -22,12 +22,9 @@ public class Player {
 
     public int chooseSticks() {
         int choice = 0;
-        System.out.println("How many sticks would you like to choose? (1-3)");
-        choice = scanner.nextInt();
 
-        if (1 > choice && choice > 3) {
-            System.out.println("Please choose 1, 2 or 3 sticks.");
-        } else {
+        while (1 > choice || choice > 3) {
+            System.out.println("How many sticks would you like to choose? (1-3)");
             choice = scanner.nextInt();
         }
         return choice;
